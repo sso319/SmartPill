@@ -106,7 +106,7 @@ class _SubPageState extends State<SubPage> {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: _incrementCounter,
-              child: Text('플러스'),
+              child: Text('유플러스'),
             ),
           ],
         ),
