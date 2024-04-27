@@ -30,7 +30,7 @@ class MainPage extends StatelessWidget {
               MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
-          child: Text('홈 페이지로 이동'),
+          child: Text('시작하기'),
         ),
       ),
     );

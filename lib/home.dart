@@ -5,7 +5,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('시작하기'),
+        title: Text('홈 페이지'),
       ),
       body: Center(
         child: Column(
