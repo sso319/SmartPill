@@ -31,13 +31,6 @@ class HomePage extends StatelessWidget {
               },
               child: Text('버튼 3'),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // 네 번째 버튼이 클릭되었을 때 수행할 작업
-              },
-              child: Text('버튼 4'),
-            ),
           ],
         ),
       ),
