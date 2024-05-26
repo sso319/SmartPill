@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "467608073084",
+    "project_id": "smarpill-386e1",
+    "storage_bucket": "smarpill-386e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467608073084:android:0f8f43430c3f1fb616eaf9",
+        "android_client_info": {
+          "package_name": "com.mycompany.smarpill"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCLju4RWY86Ui6MPkIA31m04UEDMDpiwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
