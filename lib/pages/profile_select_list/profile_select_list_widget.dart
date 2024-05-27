@@ -235,6 +235,7 @@ class _ProfileSelectListWidgetState extends State<ProfileSelectListWidget> {
                                                     },
                                                   ) ??
                                                   false;
+                                          _model.updatePage(() {});
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
@@ -253,7 +254,6 @@ class _ProfileSelectListWidgetState extends State<ProfileSelectListWidget> {
                                                       .secondary,
                                             ),
                                           );
-                                          _model.updatePage(() {});
                                         }
 
                                         setState(() {});

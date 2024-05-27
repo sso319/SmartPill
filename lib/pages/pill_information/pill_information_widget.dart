@@ -1,12 +1,13 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/pages/bottom_sheet/bottom_sheet_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 import 'pill_information_model.dart';
 export 'pill_information_model.dart';
 
@@ -73,6 +74,8 @@ class _PillInformationWidgetState extends State<PillInformationWidget>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: double.infinity,
       constraints: const BoxConstraints(
@@ -117,7 +120,9 @@ class _PillInformationWidgetState extends State<PillInformationWidget>
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
               child: FutureBuilder<ApiCallResponse>(
-                future: GetPillInformationCall.call(),
+                future: GetPillDetailCall.call(
+                  pillNumber: FFAppState().selectedPill,
+                ),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
                   if (!snapshot.hasData) {
@@ -133,7 +138,7 @@ class _PillInformationWidgetState extends State<PillInformationWidget>
                       ),
                     );
                   }
-                  final columnGetPillInformationResponse = snapshot.data!;
+                  final columnGetPillDetailResponse = snapshot.data!;
                   return Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,10 +150,9 @@ class _PillInformationWidgetState extends State<PillInformationWidget>
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              width: 90.0,
+                              width: 120.0,
                               height: 90.0,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).accent1,
                                 borderRadius: BorderRadius.circular(12.0),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).primary,
@@ -160,7 +164,10 @@ class _PillInformationWidgetState extends State<PillInformationWidget>
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
                                   child: Image.network(
-                                    '',
+                                    getJsonField(
+                                      columnGetPillDetailResponse.jsonBody,
+                                      r'''$.imagePath''',
+                                    ).toString(),
                                     width: 64.0,
                                     height: 64.0,
                                     fit: BoxFit.cover,
@@ -178,13 +185,14 @@ class _PillInformationWidgetState extends State<PillInformationWidget>
                                 children: [
                                   Text(
                                     getJsonField(
-                                      columnGetPillInformationResponse.jsonBody,
+                                      columnGetPillDetailResponse.jsonBody,
                                       r'''$.pillName''',
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .displaySmall
                                         .override(
                                           fontFamily: 'Outfit',
+                                          fontSize: 34.0,
                                           letterSpacing: 0.0,
                                         ),
                                   ),
@@ -192,21 +200,32 @@ class _PillInformationWidgetState extends State<PillInformationWidget>
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  14.0, 10.0, 0.0, 10.0),
-                              child: FlutterFlowIconButton(
-                                borderRadius: 20.0,
-                                borderWidth: 1.0,
-                                buttonSize: 40.0,
-                                icon: Icon(
-                                  Icons.star_border,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 30.0,
-                                ),
-                                onPressed: () {
-                                  print('IconButton pressed ...');
+                              padding: const EdgeInsets.all(15.0),
+                              child: ToggleIcon(
+                                onPressed: () async {
+                                  setState(() => FFAppState().bookmark =
+                                      !FFAppState().bookmark);
+                                  _model.apiResultBookmark =
+                                      await AddBookmarkCall.call(
+                                    id: FFAppState().userId,
+                                    pillNumber: FFAppState().selectedPill,
+                                  );
+
+                                  setState(() {});
                                 },
+                                value: FFAppState().bookmark,
+                                onIcon: Icon(
+                                  Icons.star_outlined,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 35.0,
+                                ),
+                                offIcon: Icon(
+                                  Icons.star_outline,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 35.0,
+                                ),
                               ),
                             ),
                           ],
@@ -246,7 +265,7 @@ class _PillInformationWidgetState extends State<PillInformationWidget>
                               children: [
                                 Text(
                                   getJsonField(
-                                    columnGetPillInformationResponse.jsonBody,
+                                    columnGetPillDetailResponse.jsonBody,
                                     r'''$.effect''',
                                   ).toString(),
                                   style: FlutterFlowTheme.of(context)
@@ -328,7 +347,10 @@ class _PillInformationWidgetState extends State<PillInformationWidget>
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '',
+                                  getJsonField(
+                                    columnGetPillDetailResponse.jsonBody,
+                                    r'''$.dosageForm''',
+                                  ).toString(),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
                                       .override(

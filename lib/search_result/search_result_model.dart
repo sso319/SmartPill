@@ -3,6 +3,10 @@ import 'search_result_widget.dart' show SearchResultWidget;
 import 'package:flutter/material.dart';
 
 class SearchResultModel extends FlutterFlowModel<SearchResultWidget> {
+  ///  Local state fields for this page.
+
+  String? pill;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

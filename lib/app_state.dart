@@ -24,6 +24,16 @@ class FFAppState extends ChangeNotifier {
     await _safeInitAsync(() async {
       _userId = await secureStorage.getString('ff_userId') ?? _userId;
     });
+    await _safeInitAsync(() async {
+      _search = await secureStorage.getString('ff_search') ?? _search;
+    });
+    await _safeInitAsync(() async {
+      _selectedPill =
+          await secureStorage.getString('ff_selectedPill') ?? _selectedPill;
+    });
+    await _safeInitAsync(() async {
+      _bookmark = await secureStorage.getBool('ff_bookmark') ?? _bookmark;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -59,6 +69,39 @@ class FFAppState extends ChangeNotifier {
 
   void deleteUserId() {
     secureStorage.delete(key: 'ff_userId');
+  }
+
+  String _search = '';
+  String get search => _search;
+  set search(String value) {
+    _search = value;
+    secureStorage.setString('ff_search', value);
+  }
+
+  void deleteSearch() {
+    secureStorage.delete(key: 'ff_search');
+  }
+
+  String _selectedPill = '';
+  String get selectedPill => _selectedPill;
+  set selectedPill(String value) {
+    _selectedPill = value;
+    secureStorage.setString('ff_selectedPill', value);
+  }
+
+  void deleteSelectedPill() {
+    secureStorage.delete(key: 'ff_selectedPill');
+  }
+
+  bool _bookmark = false;
+  bool get bookmark => _bookmark;
+  set bookmark(bool value) {
+    _bookmark = value;
+    secureStorage.setBool('ff_bookmark', value);
+  }
+
+  void deleteBookmark() {
+    secureStorage.delete(key: 'ff_bookmark');
   }
 }
 

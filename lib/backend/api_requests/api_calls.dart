@@ -86,26 +86,84 @@ class GetPillInformationCall {
       alwaysAllowBody: false,
     );
   }
+
+  static List? allPill(dynamic response) => getJsonField(
+        response,
+        r'''$[:]''',
+        true,
+      ) as List?;
+  static List<String>? pillName(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].pillName''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? pillImage(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].imagePath''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+}
+
+class GetPillDetailCall {
+  static Future<ApiCallResponse> call({
+    String? pillName = '',
+    String? pillNumber = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getPillDetail',
+      apiUrl: 'http://15.165.129.252:8080/api/pill/name/$pillNumber',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {
+        'pillNumber': pillNumber,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List? allPill(dynamic response) => getJsonField(
+        response,
+        r'''$[:]''',
+        true,
+      ) as List?;
+  static List<String>? pillName(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].pillName''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? pillImage(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].imagePath''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 class CreateProfilesCall {
   static Future<ApiCallResponse> call({
-    String? name = '',
-    String? birth = '',
-    double? height,
-    double? weight,
-    String? sex = '',
-    String? nickname = '',
+    dynamic userJson,
   }) async {
-    final ffApiRequestBody = '''
-{
-  "name": "$name",
-  "birth": "$birth",
-  "height": $height,
-  "weight": $weight,
-  "sex": "$sex",
-  "nickname": "$nickname"
-}''';
+    final user = _serializeJson(userJson);
+    final ffApiRequestBody = user;
     return ApiManager.instance.makeApiCall(
       callName: 'createProfiles',
       apiUrl: 'http://15.165.129.252:8080/api/profiles',
@@ -254,6 +312,76 @@ class GetMedInfoCall {
       params: {
         'id': id,
       },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class AddMedInfoCall {
+  static Future<ApiCallResponse> call({
+    String? id = '',
+    dynamic medInfoJson,
+  }) async {
+    final medInfo = _serializeJson(medInfoJson);
+    final ffApiRequestBody = medInfo;
+    return ApiManager.instance.makeApiCall(
+      callName: 'addMedInfo',
+      apiUrl: 'http://15.165.129.252:8080/api/profiles/$id/medInfo',
+      callType: ApiCallType.PUT,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: true,
+      decodeUtf8: true,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class BookmarkCall {
+  static Future<ApiCallResponse> call({
+    String? id = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'bookmark',
+      apiUrl: 'http://15.165.129.252:8080/api/profiles/$id/bookmarks',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {
+        'id': id,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class AddBookmarkCall {
+  static Future<ApiCallResponse> call({
+    String? id = '',
+    String? pillNumber = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'addBookmark',
+      apiUrl:
+          'http://15.165.129.252:8080/api/profiles/$id/bookmarks/$pillNumber',
+      callType: ApiCallType.PUT,
+      headers: {},
+      params: {
+        'id': id,
+        'pillNumber': pillNumber,
+      },
+      bodyType: BodyType.MULTIPART,
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

@@ -1,11 +1,18 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'profile_create_widget.dart' show ProfileCreateWidget;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class ProfileCreateModel extends FlutterFlowModel<ProfileCreateWidget> {
+  ///  Local state fields for this page.
+
+  UserStruct? user;
+  void updateUserStruct(Function(UserStruct) updateFn) =>
+      updateFn(user ??= UserStruct());
+
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
@@ -34,19 +41,11 @@ class ProfileCreateModel extends FlutterFlowModel<ProfileCreateWidget> {
     return null;
   }
 
+  DateTime? datePicked;
   // State field(s) for userBirth widget.
   FocusNode? userBirthFocusNode;
   TextEditingController? userBirthTextController;
-  final userBirthMask = MaskTextInputFormatter(mask: '####/##/##');
   String? Function(BuildContext, String?)? userBirthTextControllerValidator;
-  String? _userBirthTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Field is required';
-    }
-
-    return null;
-  }
-
   // State field(s) for userHeight widget.
   FocusNode? userHeightFocusNode;
   TextEditingController? userHeightTextController;
@@ -83,7 +82,6 @@ class ProfileCreateModel extends FlutterFlowModel<ProfileCreateWidget> {
   void initState(BuildContext context) {
     userNameTextControllerValidator = _userNameTextControllerValidator;
     userNicknameTextControllerValidator = _userNicknameTextControllerValidator;
-    userBirthTextControllerValidator = _userBirthTextControllerValidator;
     userHeightTextControllerValidator = _userHeightTextControllerValidator;
     userWeightTextControllerValidator = _userWeightTextControllerValidator;
   }
